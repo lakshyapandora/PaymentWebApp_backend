@@ -1,6 +1,6 @@
 const mongoose  = require("mongoose");
-
-const connectDb = async () => await mongoose.connect("mongodb://localhost:27017/paytm").then(()=>console.log("Database connected"));
+const { CONNECTION_STRING } = require("./config")
+const connectDb = async () => await mongoose.connect(CONNECTION_STRING).then(()=>console.log("Database connected"));
 
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
