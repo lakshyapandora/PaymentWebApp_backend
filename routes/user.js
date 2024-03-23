@@ -1,12 +1,14 @@
 // backend/routes/user.js
 const express = require('express');
+require('dotenv').config();
+
 const {authMiddleware} = require('../middleware');
 
 const router = express.Router();
 const zod = require("zod");
 const { User, Account } = require("../db");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config");
+// const { JWT_SECRET } = require("../config");
 
 const signupBody = zod.object({
     username: zod.string().email(),
@@ -48,7 +50,7 @@ router.post("/signup", async (req, res) => {
 
     const token = jwt.sign({
         userId
-    }, JWT_SECRET);
+    }, process.env.JWT_SECRET);
 
     res.json({
         message: "User created successfully",
@@ -77,7 +79,7 @@ router.post("/signin", async (req, res) => {
     if (user) {
         const token = jwt.sign({
             userId: user._id
-        }, JWT_SECRET);
+        }, process.env.JWT_SECRET);
   
         res.json({
             token
