@@ -1,6 +1,6 @@
 const mongoose  = require("mongoose");
-const { CONNECTION_STRING } = require("./config")
-const connectDb = async () => await mongoose.connect(CONNECTION_STRING).then(()=>console.log("Database connected"));
+require('dotenv').config();
+const connectDb = async () => await mongoose.connect(process.env.CONNECTION_STRING).then(()=>console.log("Database connected"));
 
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
