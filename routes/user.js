@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
     const { success } = signupBody.safeParse(req.body)
     if (!success) {
         return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
+            message: "Incorrect inputs"
         })
     }
 
@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
 
     if (existingUser) {
         return res.status(411).json({
-            message: "Email already taken/Incorrect inputs"
+            message: "Email already taken"
         })
     }
 
@@ -67,7 +67,7 @@ router.post("/signin", async (req, res) => {
     const { success } = signinBody.safeParse(req.body)
     if (!success) {
         return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
+            message: "Incorrect inputs"
         })
     }
 
@@ -118,7 +118,7 @@ router.put("/", authMiddleware, async (req, res) => {
 router.get('/bulk',async (req,res)=>{
     
     const filter = req.query.filter || "";
-
+    console.log(filter);
     const users = await User.find({
         $or: [{
             firstName: {
@@ -130,7 +130,7 @@ router.get('/bulk',async (req,res)=>{
             }
         }]
     })
-
+    console.log(`Size of users array: ${users.length}`);
     res.json({
         user: users.map(user => ({
             username: user.username,
